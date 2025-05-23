@@ -12,7 +12,11 @@ fi
 # Check if the container exists.
 if ! podman ps -a --format "{{.Names}}" | grep -q "^${CONTAINER_NAME}$"; then
     echo "$CONTAINER_NAME: does not exist. Creating..."
-    podman create --name "${CONTAINER_NAME}" "${IMAGE_NAME}"
+    podman create \
+        --name "${CONTAINER_NAME}" \
+        --volume "./scripts:/scripts" \
+        "${IMAGE_NAME}" \
+        tail -f /dev/null
 fi
 
 # Start the container if it's not running.

@@ -2,7 +2,10 @@
 FROM python:3
 
 # Install Jupyter
-RUN pip install jupyter
+RUN pip install jupyter \
+	&& alias jc="jupyter console"
+
+COPY ./scripts /scripts
 
 # Set the default command to start Jupyter Console
 CMD ["jupyter", "console"]

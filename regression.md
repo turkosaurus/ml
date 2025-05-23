@@ -20,12 +20,21 @@ training set | data used to train the model
 `m` | number of training examples
 `(x,y)` | one training example
 `(x^(i),y^(i))` | `i`th training example
+univariate | function with one variable only
 
 ---
 
+### How to represent model `f`?
+
 ```mermaid
 graph TD
+    fx[feature x] --> t
+    ty[target y] --> t
     t[training set] --> a[learning algo]
-    a --> m[model]
-    x[feature x] --> m --> y[estimated output y]
+    a --> mf[model/fuction/hypothesis]
+    x[feature x] --> mf --> y[estimated output y-hat]
 ```
+
+`f(sub w),(sub b) = wx + b`
+`f = wx + b`
+`f(x)`
