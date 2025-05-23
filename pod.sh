@@ -15,8 +15,14 @@ if ! podman ps -a --format "{{.Names}}" | grep -q "^${CONTAINER_NAME}$"; then
     podman create \
         --name "${CONTAINER_NAME}" \
         --volume "./scripts:/scripts" \
+        -p 8888:8888 \
         "${IMAGE_NAME}" \
         tail -f /dev/null
+        # jupyter notebook \
+        # --ip=0.0.0.0 \
+        # --port=8888 \
+        # --no-browser \
+        # --allow-root
 fi
 
 # Start the container if it's not running.
