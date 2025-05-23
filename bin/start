@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CONTAINER_NAME="python-jupyter"
+CONTAINER_NAME="jupy"
 IMAGE_NAME="python-jupyter"
 
 # Require podman.
@@ -13,6 +13,7 @@ fi
 if ! podman ps -a --format "{{.Names}}" | grep -q "^${CONTAINER_NAME}$"; then
     echo "$CONTAINER_NAME: does not exist. Creating..."
     podman create \
+        --rm \
         --name "${CONTAINER_NAME}" \
         --volume "./scripts:/scripts" \
         -p 8888:8888 \
@@ -28,12 +29,16 @@ if ! podman ps --format "{{.Names}}" | grep -q "^${CONTAINER_NAME}$"; then
 fi
 
 echo "$CONTAINER_NAME: starting jupyter notebook..."
-if ! podman exec "${CONTAINER_NAME}" \
+# TODO: this says it fails when it doesn't fail.
+if ! podman exec -d "${CONTAINER_NAME}" \
     jupyter notebook \
         --ip=0.0.0.0 \
         --port=8888 \
         --no-browser \
-        --allow-root; then 
+        --allow-root & then 
     echo "error: failed to start jupyter notebook."
+else
+    echo "jupyter noteboot started!"
+    echo "run open.sh to access"
 fi
 
