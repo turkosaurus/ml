@@ -18,11 +18,7 @@ if ! podman ps -a --format "{{.Names}}" | grep -q "^${CONTAINER_NAME}$"; then
         -p 8888:8888 \
         "${IMAGE_NAME}" \
         tail -f /dev/null
-        # jupyter notebook \
-        # --ip=0.0.0.0 \
-        # --port=8888 \
-        # --no-browser \
-        # --allow-root
+
 fi
 
 # Start the container if it's not running.
@@ -31,6 +27,13 @@ if ! podman ps --format "{{.Names}}" | grep -q "^${CONTAINER_NAME}$"; then
     podman start "${CONTAINER_NAME}"
 fi
 
-# Enter the container's interactive shell.
-echo "$CONTAINER_NAME: opening shell..."
-podman exec -it "${CONTAINER_NAME}" /bin/bash
+echo "$CONTAINER_NAME: starting jupyter notebook..."
+if ! podman exec "${CONTAINER_NAME}" \
+    jupyter notebook \
+        --ip=0.0.0.0 \
+        --port=8888 \
+        --no-browser \
+        --allow-root; then 
+    echo "error: failed to start jupyter notebook."
+fi
+
