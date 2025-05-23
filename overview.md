@@ -1,5 +1,7 @@
 # Overview
 
+https://www.coursera.org/
+
 ## supervised learning
 Examples are given that include the "right answer" (label `y` for input `x`). Machine learns to deduce label `y` over time.
 - spam detection
