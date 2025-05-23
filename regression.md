@@ -25,7 +25,7 @@ training set | data used to train the model
 
 ```mermaid
 graph TD
-    t[training set]--> a[learning algo]
+    t[training set] --> a[learning algo]
     a --> m[model]
-    x[feature (x)] --> m --> y[estimated output (y)]
+    x[feature x] --> m --> y[estimated output y]
 ```
